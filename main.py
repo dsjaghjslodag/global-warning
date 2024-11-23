@@ -124,38 +124,129 @@ async def extr(ctx):
         " - *Помогайте другим:* Если возможно, оказывайте помощь нуждающимся."
     )
 
-continents = {
-    "Africa": "https://www.wn.com/africa/climate-change",
-    "Asia": "https://www.wn.com/asia/climate-change",
-    "Europe": "https://www.wn.com/europe/climate-change",
-    "North America": "https://www.wn.com/north-america/climate-change",
-    "South America": "https://www.wn.com/south-america/climate-change",
-    "Australia": "https://www.wn.com/australia/climate-change",
-    "Antarctica": "https://www.wn.com/antarctica/climate-change" 
-}
+@bot.command()
+async def news(ctx):
+    url = 'https://newsapi.org/v2/everything?q=global-warming&apiKey=1e1bb27dba794be686201c91e939f483'
+
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        
+        if data['articles']:
+            articles = data['articles'][:1]
+            article = articles[0]
+            title = article['title']
+            description = article['description'] or 'Нет описания'
+            image_url = article['urlToImage'] or ''
+            article_url = article['url']
+
+            embed = discord.Embed(title=title, description=f"{description}\n[**Читать статью**]({article_url})", color=0x1F8B4C)
+            embed.set_image(url=image_url)
+            embed.url = article_url
+            await ctx.send(embed=embed)
+    
+    url = 'https://newsapi.org/v2/everything?q=глобальное-потепление&apiKey=1e1bb27dba794be686201c91e939f483'
+
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        
+        if data['articles']:
+            articles = data['articles'][:1]
+            article = articles[0]
+            title = article['title']
+            description = article['description'] or 'Нет описания'
+            image_url = article['urlToImage'] or ''
+            article_url = article['url']
+
+            embed = discord.Embed(title=title, description=f"{description}\n[**Читать статью**]({article_url})", color=0x3fe0d0)
+            embed.set_image(url=image_url)
+            embed.url = article_url
+            await ctx.send(embed=embed)
+    else:
+        await ctx.send("Произошла ошибка.")
+    url = 'https://newsapi.org/v2/everything?q=climate-климат&apiKey=1e1bb27dba794be686201c91e939f483'
+
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        
+        if data['articles']:
+            articles = data['articles'][:1]
+            article = articles[0]
+            title = article['title']
+            description = article['description'] or 'Нет описания'
+            image_url = article['urlToImage'] or ''
+            article_url = article['url']
+
+            embed = discord.Embed(title=title, description=f"{description}\n[**Читать статью**]({article_url})", color=0x26abff)
+            embed.set_image(url=image_url)
+            embed.url = article_url
+            await ctx.send(embed=embed)
+
+    else:
+        await ctx.send("Произошла ошибка.")
 
 @bot.command()
 async def climate(ctx):
-    await ctx.send("Ищу новости о климате...")
-
-    news_list = []
-    for continent, url in continents.items():
-        try:
+    url = 'https://newsapi.org/v2/everything?q=climate-in-Euroasia&apiKey=1e1bb27dba794be686201c91e939f483'
+    url2 = 'https://newsapi.org/v2/everything?q=climate-climate-in-Australia&apiKey=1e1bb27dba794be686201c91e939f483'
+    url3 = 'https://newsapi.org/v2/everything?q=climate-climate-in-Africa&apiKey=1e1bb27dba794be686201c91e939f483'
+    url4 = 'https://newsapi.org/v2/everything?q=climate-climate-in-North-America&apiKey=1e1bb27dba794be686201c91e939f483'
+    url5 = 'https://newsapi.org/v2/everything?q=climate-climate-climate-climate-climate-in-South-America&apiKey=1e1bb27dba794be686201c91e939f483'
+    news_messages = []
+    for i in range(5):
+        i += 1
+        if i == 1:
             response = requests.get(url)
-            response.raise_for_status()
-
-            soup = BeautifulSoup(response.content, 'html.parser')
-            article_elements = soup.find_all('h3', class_='article-title')
-
-            if article_elements:
-                article_title = article_elements[0].text.strip()
+        if i == 2:
+            response = requests.get(url2)
+        if i == 3:
+            response = requests.get(url3)
+        if i == 4:
+            response = requests.get(url4)
+        if i == 5:
+            response = requests.get(url5)
+        if response.status_code == 200:
+            data = response.json()
+            if data['articles']:
+                articles = data['articles'][:1]
+                article = articles[0]
+                title = article['title']
+                description = article['description'] or 'Нет описания'
+                image_url = article['urlToImage'] or ''
+                article_url = article['url']
+                if i == 1:
+                    embed = discord.Embed(title=f"**Актуальная новость о климате в Евразии:**\n{title}", description=f"{description}\n[**Читать статью**]({article_url})", color=0xe03f4f)
+                    embed.set_image(url=image_url)
+                    embed.url = article_url
+                    await ctx.send(embed=embed)
+                if i == 2:
+                    embed = discord.Embed(title=f"**Актуальная новость о климате в Австралии:**\n{title}", description=f"{description}\n[**Читать статью**]({article_url})", color=0xc16ca8)
+                    embed.set_image(url=image_url)
+                    embed.url = article_url
+                    await ctx.send(embed=embed)
+                if i == 3:
+                    embed = discord.Embed(title=f"**Актуальная новость о климате в Африке:**\n{title}", description=f"{description}\n[**Читать статью**]({article_url})", color=0xa86cc1)
+                    embed.set_image(url=image_url)
+                    embed.url = article_url
+                    await ctx.send(embed=embed)
+                if i == 4:
+                    embed = discord.Embed(title=f"**Актуальная новость о климате в Северной Америке:**\n{title}", description=f"{description}\n[**Читать статью**]({article_url})", color=0x6ca8c1)
+                    embed.set_image(url=image_url)
+                    embed.url = article_url
+                    await ctx.send(embed=embed)
+                if i == 5:
+                    embed = discord.Embed(title=f"**Актуальная новость о климате в Южной Америке:**\n{title}", description=f"{description}\n[**Читать статью**]({article_url})", color=0x98fb98)
+                    embed.set_image(url=image_url)
+                    embed.url = article_url
+                    await ctx.send(embed=embed)
             else:
-                article_title = "Не удалось найти статью."
+                await ctx.send("**Не удалось найти новость из какого-то континента**")
+        else:
+            await ctx.send("Произошла ошибка.")
 
-            news_list.append(f"{continent}: {article_title}\n")
-
-        except requests.exceptions.RequestException as e:
-            print(f"Ошибка при получении данных с {continent}: {e}")
-            news_list.append(f"{continent}: Не удалось найти статью.\n")
-
-    await ctx.send("".join(news_list))
+bot.run('TOKEN')
